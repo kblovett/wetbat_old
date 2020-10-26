@@ -1,28 +1,35 @@
-import pkg from 'pg';
-import colors from 'colors';
+import Sequelize from 'sequelize';
 
 const connectDB = async () => {
-  const { Pool } = pkg;
+  const dbHOST = process.env.DB_HOST;
+  const dbPORT = process.env.DB_PORT;
+  const dbNAME = process.env.DB_NAME;
+  const dbUSER = process.env.DB_USER;
+  const dbPW = process.env.DB_PW;
 
-  const dbUser = process.env.DB_USER;
-  const dbPw = process.env.DB_PW;
-  const dbHost = process.env.DB_HOST;
-  const dbPort = process.env.DB_PORT;
-  const dbName = process.env.DB_NAME;
-
-  const pool = await new Pool({
-    user: dbUser,
-    password: dbPw,
-    host: dbHost,
-    port: dbPort,
-    database: dbName,
-  });
-  pool.query('SELECT NOW()', (err, res) => {
-    if (err) console.log(err);
-    else
-      console.log(`Database connected at: ${JSON.stringify(res.rows)}`.green);
-  });
-  return pool;
+  try {
+    const db = await new Sequelize({
+      dialect: 'postgres',
+      host: dbHOST,
+      port: dbPORT,
+      database: dbNAME,
+      username: dbUSER,
+      password: dbPW,
+      connectTimeout: 30000,
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 1000,
+      },
+    });
+    db.authenticate().then(() =>
+      console.log(`DB connected: ${dbNAME}`.cyan.underline)
+    );
+  } catch (err) {
+    console.error(`ERROR: ${err.message}`.red.underline.bold);
+    process.exit(1);
+  }
 };
 
 export default connectDB;
