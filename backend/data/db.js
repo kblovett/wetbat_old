@@ -18,7 +18,9 @@ const connectDB = async () => {
     database: dbName,
   });
   pool.query('SELECT NOW()', (err, res) => {
-    console.log(`Database connected at: ${JSON.stringify(res.rows)}`.green);
+    if (err) console.log(err);
+    else
+      console.log(`Database connected at: ${JSON.stringify(res.rows)}`.green);
   });
   return pool;
 };
