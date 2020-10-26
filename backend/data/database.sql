@@ -62,7 +62,7 @@ CREATE TABLE bookings
     booking_id SERIAL,
     agent_id UUID,
     traveller_id SERIAL,
-    passenges INT,
+    passengers INT,
     depart_loc VARCHAR(255),
     depart_date DATE,
     dest_loc VARCHAR(255),

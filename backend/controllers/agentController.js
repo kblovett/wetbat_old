@@ -6,25 +6,29 @@ import Agent from '../models/agentModel.js';
 import generateToken from '../utils/generateToken.js';
 
 const registerAgent = asyncHandler(async (req, res) => {
-  const { fname, lname, email, password } = req.body;
+  const { fname, lname, phone, email, password } = req.body;
   const agentExists = await Agent.findOne({ email });
   if (agentExists) {
     res.status(400);
     throw new Error('Already registered');
   } else {
     const agent = await Agent.create({
-      name,
+      fname,
+      lname,
+      phone,
       email,
       password,
     });
     if (agent) {
-      const { _id, name, email, isAdmin } = agent;
+      const { agent_id, fname, lname, phone, email, isAdmin } = agent;
       res.status(201).json({
-        _id,
-        name,
+        agent_id,
+        fname,
+        lname,
+        phone,
         email,
         isAdmin,
-        token: generateToken(_id),
+        token: generateToken(agent_id),
       });
     } else {
       res.status(400);
