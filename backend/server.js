@@ -6,13 +6,13 @@ import colors from 'colors';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 // DB import
-// import connectDB from './config/db.js';
+import connectDB from './data/db.js';
 
 // Route imports
 
-dotenv.config(); // init .env variables
-// connectDB(); // connect to db
-const app = express(); // express app
+dotenv.config();
+connectDB();
+const app = express();
 
 // body parser for passing json in the params body
 app.use(express.json());
