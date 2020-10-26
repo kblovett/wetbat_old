@@ -35,3 +35,5 @@ Agent.init(
     modelName: 'Agent',
   }
 );
+
+export default Agent;

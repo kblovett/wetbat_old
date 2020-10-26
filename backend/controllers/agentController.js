@@ -1,21 +1,24 @@
 import asyncHandler from 'express-async-handler';
 
+// model imports
+import Agent from '../models/agentModel.js';
+// utility imports
 import generateToken from '../utils/generateToken.js';
 
-const registerUser = asyncHandler(async (req, res) => {
+const registerAgent = asyncHandler(async (req, res) => {
   const { fname, lname, email, password } = req.body;
-  const userExists = await User.findOne({ email });
-  if (userExists) {
+  const agentExists = await Agent.findOne({ email });
+  if (agentExists) {
     res.status(400);
     throw new Error('Already registered');
   } else {
-    const user = await User.create({
+    const agent = await Agent.create({
       name,
       email,
       password,
     });
-    if (user) {
-      const { _id, name, email, isAdmin } = user;
+    if (agent) {
+      const { _id, name, email, isAdmin } = agent;
       res.status(201).json({
         _id,
         name,
@@ -25,9 +28,9 @@ const registerUser = asyncHandler(async (req, res) => {
       });
     } else {
       res.status(400);
-      throw new Error('Invalid user data');
+      throw new Error('Invalid agent data');
     }
   }
 });
 
-export default registerUser;
+export default registerAgent;
