@@ -17,8 +17,8 @@ CREATE TABLE agents
     phone CHAR(10),
     email VARCHAR(255),
     password VARCHAR(255),
-    PRIMARY KEY(agent_id),
-)
+    PRIMARY KEY(agent_id)
+);
 
 CREATE TABLE provinces
 (
@@ -26,7 +26,7 @@ CREATE TABLE provinces
     province_name VARCHAR(255),
     province_code CHAR(2),
     PRIMARY KEY(province_id)
-)
+);
 
 CREATE TABLE countries
 (
@@ -34,7 +34,7 @@ CREATE TABLE countries
     country_name VARCHAR(255),
     country_code CHAR(2),
     PRIMARY KEY(country_id)
-)
+);
 
 CREATE TABLE travellers
 (
@@ -64,9 +64,9 @@ CREATE TABLE bookings
     traveller_id SERIAL,
     passenges INT,
     depart_loc VARCHAR(255),
-    depart_date DATETIME,
+    depart_date DATE,
     dest_loc VARCHAR(255),
-    dest_date DATETIME,
+    dest_date DATE,
     booking_cost FLOAT,
     PRIMARY KEY(booking_id),
     CONSTRAINT fk_traveller
