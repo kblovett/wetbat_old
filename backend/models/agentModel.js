@@ -1,12 +1,15 @@
-import { Sequelize, Model, DataTypes } from 'sequelize';
+import pkg from 'sequelize';
+const { DataTypes } = pkg;
 
-const sequelize = new Sequelize();
-class Agent extends Model {}
+import { db } from '../data/db.js';
 
-Agent.init(
+// const sequelize = new Sequelize('postgres::memory');
+
+const Agent = db.define(
+  'Agent',
   {
     agent_id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     fname: {
@@ -30,10 +33,9 @@ Agent.init(
       allowNull: false,
     },
   },
-  {
-    sequelize,
-    modelName: 'Agent',
-  }
+  { tableName: 'agents' }
 );
+
+console.log(Agent === sequelize.models.Agent);
 
 export default Agent;
